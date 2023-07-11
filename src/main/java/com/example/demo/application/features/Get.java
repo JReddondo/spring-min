@@ -2,7 +2,6 @@ package com.example.demo.application.features;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.common.NotfoundException;
+
+import com.example.demo.common.Util;
 
 @Configuration
 public class Get {
@@ -29,21 +29,17 @@ public class Get {
 
         @GetMapping("/{id}")
         public ResponseEntity<?> get(@PathVariable String id) {
-            Response pizza = Get(pizzas.stream()
-                    .filter(p -> p.id.equals(id)));
+
+            var query = pizzas.stream()
+                    .filter(p -> p.id.equals(id));
                     
+            var pizza = Util.getEntity(query);                   
 
             return ResponseEntity.status(HttpStatus.OK).body(pizza);
 
         }
 
-        public static Response Get(Stream<Response> pizzas) {
-            return pizzas
-                    .findFirst()
-                    .orElseThrow(() -> {
-                        throw new NotfoundException();
-                    });
-        }
+        
     }
 
     public record Response(String id, String name) {

@@ -1,7 +1,9 @@
 package com.example.demo.domain.ingredient.entities;
 
+import com.example.demo.common.Agregate;
+
 //entidad
-public class Ingredient {
+public class Ingredient extends Agregate {
     private IngredientId id;
     private String name;
     private double price;

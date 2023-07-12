@@ -6,7 +6,7 @@ public interface Respository {
         T get(ID id);
     }
     
-    public interface Add<T>{
+    public interface Add<T>{        
         void add(T entity);
     }
 

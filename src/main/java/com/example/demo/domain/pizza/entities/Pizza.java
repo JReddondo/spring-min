@@ -1,14 +1,18 @@
 package com.example.demo.domain.pizza.entities;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import com.example.demo.common.Agregate;
 import com.example.demo.domain.ingredient.entities.Ingredient;
 import com.example.demo.domain.pizza.domainexception.RemoveIngredientException;
+import com.example.demo.domain.pizza.events.UpdateEventBody;
+import com.example.demo.domain.pizza.events.UpdateEventPizza;
 
-public class Pizza {
+public class Pizza extends Agregate {
 
     private final PizzaId id;
     private String name;
@@ -52,11 +56,19 @@ public class Pizza {
     }
 
     public static Pizza Create(PizzaId id, String name, Set<Ingredient> ingredients) {
-        return new Pizza(id, name, ingredients);
+        var pizza = new Pizza(id, name, ingredients);
+        return pizza;
     }
 
     public void update(String name) {
         this.name = name;
+
+        var event = new UpdateEventPizza(
+                UUID.randomUUID(),
+                new Date(),
+                "Update-Pizza",
+                new UpdateEventBody(id, name));
+        addEvent(event);
     }
 
     public void addIngredient(Ingredient ingredient) {

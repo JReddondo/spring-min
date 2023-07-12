@@ -3,11 +3,14 @@ package com.example.demo.infraestructura.ingredient;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import com.example.demo.common.Util;
 import com.example.demo.domain.ingredient.IngredientRepository;
 import com.example.demo.domain.ingredient.entities.Ingredient;
 import com.example.demo.domain.ingredient.entities.Ingredient.IngredientId;
 
+@Component
 public class IngredientRepositoryImp implements IngredientRepository {
 
     private final Set<Ingredient> ingredients = new HashSet<>();
@@ -27,13 +30,13 @@ public class IngredientRepositoryImp implements IngredientRepository {
 
     @Override
     public void add(Ingredient entity) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
 
     @Override
     public void update(Ingredient entity) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
@@ -45,7 +48,7 @@ public class IngredientRepositoryImp implements IngredientRepository {
 
     @Override
     public void remove(Ingredient entity) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
     

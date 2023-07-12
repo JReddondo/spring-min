@@ -1,5 +1,7 @@
 package com.example.demo.infraestructura.pizza;
 
+import org.springframework.stereotype.Component;
+
 import com.example.demo.common.Agregate;
 import com.example.demo.domain.pizza.PizzaRepository;
 import com.example.demo.domain.pizza.entities.Pizza;
@@ -7,6 +9,7 @@ import com.example.demo.domain.pizza.entities.Pizza.PizzaId;
 
 import an.awesome.pipelinr.Pipeline;
 
+@Component
 public class PizzaRepositoryImpl implements PizzaRepository {
 
     private final Pipeline pipeline;
@@ -24,19 +27,19 @@ public class PizzaRepositoryImpl implements PizzaRepository {
 
     @Override
     public void update(Pizza entity) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public Pizza get(PizzaId id) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'get'");
     }
 
     @Override
     public void remove(Pizza entity) {
-        // TODO Auto-generated method stub
+        
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
     

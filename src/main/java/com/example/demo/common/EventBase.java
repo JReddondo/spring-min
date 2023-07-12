@@ -4,6 +4,8 @@ package com.example.demo.common;
 import java.util.Date;
 import java.util.UUID;
 
+import an.awesome.pipelinr.Notification;
+
 public abstract class EventBase<T> implements Notification{
     private final UUID id;
     private final Date date;

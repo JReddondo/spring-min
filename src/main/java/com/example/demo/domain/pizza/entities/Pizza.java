@@ -9,6 +9,8 @@ import java.util.UUID;
 import com.example.demo.common.Agregate;
 import com.example.demo.domain.ingredient.entities.Ingredient;
 import com.example.demo.domain.pizza.domainexception.RemoveIngredientException;
+import com.example.demo.domain.pizza.events.CreateEventBody;
+import com.example.demo.domain.pizza.events.CreateEventPizza;
 import com.example.demo.domain.pizza.events.UpdateEventBody;
 import com.example.demo.domain.pizza.events.UpdateEventPizza;
 
@@ -57,7 +59,11 @@ public class Pizza extends Agregate {
 
     public static Pizza Create(PizzaId id, String name, Set<Ingredient> ingredients) {
         var pizza = new Pizza(id, name, ingredients);
-        return pizza;
+        var event = new CreateEventPizza(UUID.randomUUID(), new Date(), "Create-pizza",
+                new CreateEventBody(id, name, ingredients));
+
+        pizza.addEvent(event);
+        return pizza;        
     }
 
     public void update(String name) {

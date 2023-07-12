@@ -2,7 +2,6 @@ package com.example.demo.application.pizzas.features.commands;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.Respository;
-import com.example.demo.domain.ingredient.IngredientRepository;
 import com.example.demo.domain.ingredient.entities.Ingredient;
 import com.example.demo.domain.ingredient.entities.Ingredient.IngredientId;
 import com.example.demo.domain.pizza.entities.Pizza;

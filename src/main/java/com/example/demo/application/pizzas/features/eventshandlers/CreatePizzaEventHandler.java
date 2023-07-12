@@ -1,4 +1,4 @@
-package com.example.demo.application.pizzas.features.commands.EventHandler;
+package com.example.demo.application.pizzas.features.eventshandlers;
 
 import com.example.demo.domain.pizza.events.CreateEventPizza;
 

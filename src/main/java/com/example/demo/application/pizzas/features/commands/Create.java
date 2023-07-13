@@ -46,12 +46,12 @@ public class Create {
     }
 
     @Component
-    public class CreatePizza implements Command.Handler<Request, Voidy> {
+    public class CommandHandler implements Command.Handler<Request, Voidy> {
 
         private final Respository.Add<Pizza> repository;
         private final Respository.Get<Ingredient, IngredientId> repositoryIngredient;
 
-        public CreatePizza(
+        public CommandHandler(
                 final Respository.Add<Pizza> repository,
                 final Respository.Get<Ingredient, IngredientId> repositoryIngredient) {
             this.repository = repository;

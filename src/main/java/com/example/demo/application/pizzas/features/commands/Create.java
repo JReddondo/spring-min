@@ -3,6 +3,7 @@ package com.example.demo.application.pizzas.features.commands;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,6 @@ import com.example.demo.domain.pizza.entities.Pizza.PizzaId;
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipeline;
-import an.awesome.pipelinr.Voidy;
 
 @Configuration
 public class Create {
@@ -37,16 +37,19 @@ public class Create {
 
         @PostMapping
         public ResponseEntity<?> create(@RequestBody Request request) {
-            pipeline.send(request);
-            return null;
+            var response = pipeline.send(request);
+            return ResponseEntity.status(201).body(response);            
         }
     }
 
-    public record Request(String name, Set<String> ingredients) implements Command<Voidy> {
+    public record Request(String name, Set<String> ingredients) implements Command<Response> {
     }
 
+    public record ResponseIngredient(String id,String name){}
+    public record Response(UUID id,String name,Double price, Stream<ResponseIngredient> ingredients){}
+
     @Component
-    public class CommandHandler implements Command.Handler<Request, Voidy> {
+    public class CommandHandler implements Command.Handler<Request, Response> {
 
         private final Respository.Add<Pizza> repository;
         private final Respository.Get<Ingredient, IngredientId> repositoryIngredient;
@@ -59,20 +62,27 @@ public class Create {
         }
 
         @Override
-        public Voidy handle(Request record) {
+        public Response handle(Request record) {
 
             var result = record.ingredients.stream().map(i -> {
                 var id = new IngredientId(i);
                 return repositoryIngredient.get(id);
             });
             
+            var id = UUID.randomUUID();
             var pizza = Pizza.Create(
-                    new PizzaId(UUID.randomUUID()),
+                    new PizzaId(id),
                     record.name,
                     result.collect(Collectors.toSet()));
 
             repository.add(pizza);
-            return new Voidy();
+            return new Response(
+                id, 
+                pizza.getName(), 
+                pizza.getPrice(), 
+                pizza.getIngredients().stream().map(i->{
+                    return new ResponseIngredient(i.getId().getId(), i.getName());
+                }));
         }
     }
 

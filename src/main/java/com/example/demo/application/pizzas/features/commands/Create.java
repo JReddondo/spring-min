@@ -76,6 +76,7 @@ public class Create {
                     result.collect(Collectors.toSet()));
 
             repository.add(pizza);
+            
             return new Response(
                 id, 
                 pizza.getName(), 

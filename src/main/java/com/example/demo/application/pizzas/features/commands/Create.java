@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.common.Respository;
+import com.example.demo.common.middelwares.validator.AbstractCommandValidator;
 import com.example.demo.domain.ingredient.entities.Ingredient;
 import com.example.demo.domain.ingredient.entities.Ingredient.IngredientId;
 import com.example.demo.domain.pizza.entities.Pizza;
@@ -21,6 +22,8 @@ import com.example.demo.domain.pizza.entities.Pizza.PizzaId;
 
 import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Pipeline;
+import static br.com.fluentvalidator.predicate.ObjectPredicate.nullValue;
+import static java.util.function.Predicate.not;
 
 @Configuration
 public class Create {
@@ -87,4 +90,17 @@ public class Create {
         }
     }
 
+    @Component
+    public class Validator extends AbstractCommandValidator<Request, Response>{
+
+        @Override
+        public void rules() {
+            ruleFor(Request::name)
+            .must(not(nullValue()))
+            .withMessage("Null name is not allowed")
+            .withFieldName("name");
+
+        }
+
+    }
 }
